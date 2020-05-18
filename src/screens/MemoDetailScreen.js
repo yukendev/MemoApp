@@ -20,7 +20,7 @@ class MemoDetailScreen extends React.Component {
         </View>
 
         <CircleButton color="white" style={styles.editButton}>
-          +
+          ✒︎
         </CircleButton>
       </View>
     );
