@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import MemoDetailScreen from "./src/screens/MemoDetailScreen";
 import MemoListScreen from "./src/screens/MemoListScreen";
 import Appbar from "./src/components/Appbar";
 
@@ -7,7 +8,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Appbar />
-      <MemoListScreen />
+      <MemoDetailScreen />
     </View>
   );
 }
