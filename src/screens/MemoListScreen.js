@@ -2,8 +2,31 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import MemoList from "../components/MemoList";
 import CircleButton from "../elements/CircleButton";
+import firebase from "firebase";
 
 class MemoListScreen extends React.Component {
+  state = {
+    memoList: [],
+  };
+
+  UNSAFE_componentWillMount() {
+    const currentUser = this.props.route.params.currentUser;
+    const db = firebase.firestore();
+    db.collection(`users/${currentUser.uid}/memos`)
+      .get()
+      .then((snapshot) => {
+        const memoList = [];
+        snapshot.forEach((doc) => {
+          console.log(doc.data());
+          memoList.push(doc.data());
+        });
+        this.setState({ memoList: memoList });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   handlePress() {
     this.props.navigation.navigate("MemoCreate", {
       currentUser: this.props.route.params.currentUser,
@@ -12,7 +35,10 @@ class MemoListScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <MemoList navigation={this.props.navigation} />
+        <MemoList
+          memoList={this.state.memoList}
+          navigation={this.props.navigation}
+        />
         <CircleButton onPress={this.handlePress.bind(this)}>+</CircleButton>
       </View>
     );
