@@ -19,11 +19,10 @@ class SignupScreen extends React.Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then((user) => {
-        this.props.navigation.navigate("Home");
+        const userData = user.user;
+        this.props.navigation.navigate("Home", { currentUser: userData });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   }
 
   render() {
