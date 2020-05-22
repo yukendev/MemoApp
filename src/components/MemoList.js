@@ -12,14 +12,27 @@ class MemoList extends React.Component {
     console.log(item);
     return (
       <TouchableHighlight
-        onPress={() => this.props.navigation.navigate("MemoDetail")}
+        onPress={() =>
+          this.props.navigation.navigate("MemoDetail", { memo: item })
+        }
       >
         <View style={styles.memoListItem}>
-          <Text style={styles.memoTitle}>{item.body}</Text>
-          <Text style={styles.memoDate}>2017/5/5</Text>
+          <Text style={styles.memoTitle}>{item.body.substring(0, 10)}</Text>
+          <Text style={styles.memoDate}>
+            {this.dateString(item.created_on)}
+          </Text>
         </View>
       </TouchableHighlight>
     );
+  }
+
+  dateString(date) {
+    if (date == null) {
+      return "";
+    }
+    const dateObject = date.toDate();
+
+    return dateObject.toISOString().split("T")[0];
   }
 
   render() {
