@@ -12,6 +12,10 @@ class MemoDetailScreen extends React.Component {
     this.setState({ memo: memo });
   }
 
+  returnMemo(memo) {
+    this.setState({ memo });
+  }
+
   dateString(date) {
     if (date == null) {
       return "";
@@ -46,7 +50,10 @@ class MemoDetailScreen extends React.Component {
           color="white"
           style={styles.editButton}
           onPress={() =>
-            this.props.navigation.navigate("MemoEdit", { memo: memo })
+            this.props.navigation.navigate("MemoEdit", {
+              memo: memo,
+              returnMemo: this.returnMemo.bind(this),
+            })
           }
         >
           ✒︎

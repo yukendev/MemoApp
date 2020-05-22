@@ -10,12 +10,10 @@ class MemoEditScreen extends React.Component {
   };
   UNSAFE_componentWillMount() {
     const memo = this.props.route.params.memo;
-    console.log(memo);
     this.setState({ body: memo.body, key: memo.key });
   }
 
   handlePress() {
-    console.log("jk");
     const { currentUser } = firebase.auth();
     const db = firebase.firestore();
     const newDate = firebase.firestore.Timestamp.now();
@@ -25,9 +23,15 @@ class MemoEditScreen extends React.Component {
     docRef
       .update({
         body: this.state.body,
+        created_on: newDate,
       })
       .then(() => {
-        console.log("success!");
+        this.props.route.params.returnMemo({
+          body: this.state.body,
+          key: this.state.key,
+          created_on: newDate,
+        });
+        this.props.navigation.goBack();
       })
       .catch((error) => {
         console.log(error);
